@@ -1,0 +1,18 @@
+<h1>Editing symptom</h1>
+ 
+<%= simple_form_for :symptom, url: symptom_path(@symptom), method: :patch do |f| %>
+
+                  	<p>
+										    <%= f.input :name, label: 'Nowy problem', placeholder: "Nazwa problemu", required: false %>			
+													  	<%= f.collection_select(:action_ids, Action.all, :id, :name,
+													                              {include_blank: false, :include_hidden => false},
+													                              {:multiple => true}) %>
+ 															<%= f.input :avatar, as: :file %>
+										</p>
+										  <%= f.button :submit , "Zapisz problem" %>
+										  </p>
+
+ 
+<% end %>
+ 
+<%= link_to 'Back', symptom_index_path %>

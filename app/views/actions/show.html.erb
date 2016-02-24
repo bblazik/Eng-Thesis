@@ -1,0 +1,26 @@
+<p>
+  <strong>Title:</strong>
+  <%= @action.name %>
+</p>
+
+<p>
+	<strong>Category:</strong>
+	<%= @action.category %>
+</p>
+
+<p>
+	<strong>benefit:</strong>
+	<td><% @action.benefits.each do |benefit| %> </td>
+	<td> <%= benefit.to_s %> </td>
+	<% end %>
+</p>
+
+<p>
+	<strong>defects:</strong>
+	<td><% @action.defects.each do |defect| %> </td>
+	<td> <%= defect.to_s %> </td>
+	<% end %>
+</p>
+<%= link_to 'Edit', edit_action_path(@action) %>
+ 
+

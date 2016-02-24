@@ -1,0 +1,84 @@
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="col-md-12">
+            <div class="section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">                    	
+											<%= simple_form_for :action_object, url: actions_path do |f| %>
+											  <p>
+											    <%= f.input :name , label: 'Nowa akcja', placeholder: "Nazwa akcji", required: false %>
+											  </p>
+										  
+											  <p>
+											  	<%= f.label :Wybierz_zalety, hint: 'No special characters.' %>
+													<%= f.collection_select(:benefit_ids, Benefit.all, :id, :content,
+											                              {include_blank: false, :include_hidden => false},
+											                              {:multiple => true}) %>
+											  </p>
+											  <p>
+											    <%= f.label :Wybierz_wady %>                     
+											  	<%= f.collection_select(:defect_ids, Defect.all, :id, :content,
+											                              {include_blank: false, :include_hidden => false},
+											                              {:multiple => true}) %>
+											  </p>
+											    <%= f.label :Wybierz_kategorie %>  
+											    <%= f.collection_select(:category_id , Category.all, :id, :name) %>
+											     
+
+											    <%= f.button :submit, "Zapisz akcje" %>
+											  </p>
+											<% end %>
+                  	
+                  </div>
+                  <div class="col-md-6">
+											<p>
+                  	<%= simple_form_for :symptom, url: symptom_index_path   do |f| %>
+                  	<p>
+										    <%= f.input :name, label: 'Nowy problem', placeholder: "Nazwa problemu", required: false %>			
+													  	<%= f.collection_select(:action_ids, Action.all, :id, :name,
+													                              {include_blank: false, :include_hidden => false},
+													                              {:multiple => true}) %>
+ 															<div class = "form-group">
+ 															<%= f.input :avatar, as: :file %>
+									
+										  <%= f.button :submit, "Zapisz problem" %>
+										  </div>
+										  
+										<% end %>
+									</p>
+
+
+										<%= simple_form_for :benefit, url: benefit_index_path, html: {class: "form-inline"}     do |f| %>
+										  
+										  	<div class = "form-group" >
+										    <%= f.input :content , label: 'Nowa zaleta' , placeholder: "Treść zalety", required: false %> 
+										    <%= f.button :submit , "Zapisz zalete"%>
+										    </div>
+										 
+										<% end %>	
+										
+
+                  	<%= simple_form_for :defect, url: defect_index_path, html: {class: "form-inline"}  do |f| %>
+										  <p>
+										    <%= f.input :content ,label: 'Nowa wada', placeholder: "Treść wady", required: false %>
+										    <%= f.button :submit , "Zapisz wade", data: { notice:'Your confirm message' } %>
+										     
+										  </p>
+										<% end %>
+
+                  </div>
+                </div>
+                
+                  
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

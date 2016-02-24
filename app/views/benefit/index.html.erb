@@ -1,0 +1,18 @@
+
+<h1> It works</h1>
+<table>
+	<p>
+		<h2>Name</h2>
+	<p>
+	  <% @benefits.each do |benefit| %>
+	    <tr>
+	      <td><%= benefit.content %></li> 
+	      <td><%= link_to 'Show', benefit_path(benefit) %></td>
+     		<td><%= link_to 'Edit', edit_benefit_path(benefit) %></td> 
+     		     		<td><%= link_to 'Destroy', benefit_path(benefit),
+              method: :delete %>
+        </td> 
+	    </tr>
+	  <% end %>
+	</p>
+</table>

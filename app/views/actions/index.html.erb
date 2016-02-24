@@ -1,0 +1,27 @@
+<table>
+	<p>
+		<strong>Name</strong>
+	<p>
+	  <% @actions.each do |action| %>
+	    <tr>
+	      <td><%= action.name %></li> 
+	      <td> <%= action.category %> </td>
+	      <td></td>
+	      <td><% action.benefits.each do |b| %> </td>
+	      <td> <%= b %> </td>
+	      <td><% action.defects.each do |d| %> </td>
+	      <td> <%= d %> </td>
+				<%  end %>
+	      
+     		<%  end %>
+     		<td><%= link_to 'Show', action_path(action) %></td>
+     		<td><%= link_to 'Edit', edit_action_path(action) %></td>
+     		<td><%= link_to 'Destroy', action_path(action),
+              method: :delete %>
+        </td> 
+	    </tr>
+	  <% end %>
+	</p>
+</table>
+
+<%= link_to 'Back', root_path %>

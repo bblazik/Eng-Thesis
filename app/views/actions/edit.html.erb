@@ -1,0 +1,20 @@
+<h1>Editing action</h1>
+ 
+<%= form_for :action_object, url: action_path(@action), method: :patch do |f| %>
+ 
+
+ 
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', actions_path %>

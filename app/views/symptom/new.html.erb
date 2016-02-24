@@ -1,0 +1,21 @@
+<%= form_for :symptom, url: symptom_index_path do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+  	<% f.label :Solution %>
+  	<%= f.collection_select(:action_ids, Action.all, :id, :name,
+                              {include_blank: false, :include_hidden => false},
+                              {:multiple => true}) %>
+  </p>
+  
+  <p>
+	  <%#= simple_form_for @symptom, url: symptom_index_path do |form| %>
+	  <%#= form.input :avatar, as: :file %>
+		<%# end %>
+  </p>
+
+  <%= f.submit %>
+<% end %>
+<%= link_to 'Back', symptom_index_path %>

@@ -1,0 +1,32 @@
+<h1> New Article </h1>
+<%= form_for :action_object, url: actions_path do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+    
+  </p>
+  
+  <p>
+    <%= f.label :category %><br>
+    <%= f.collection_select(:category_id , Category.all, :id, :name) %>
+  </p>
+  
+  <p>
+  	<% f.label :benefits %>
+  	<%= f.collection_select(:benefit_ids, Benefit.all, :id, :content,
+                              {include_blank: false, :include_hidden => false},
+                              {:multiple => true}) %>
+  </p>
+  
+  <p>
+  	<% f.label :defects %>
+  	<%= f.collection_select(:defect_ids, Defect.all, :id, :content,
+                              {include_blank: false, :include_hidden => false},
+                              {:multiple => true}) %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<%= link_to 'Back', actions_path %>

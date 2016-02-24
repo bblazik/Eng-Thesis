@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<style>   
+	h1 { padding: .1em; margin: 0; }
+  #products { float:left; width: 300px; margin-right: 2em;cursor:move; }
+  #cover { } 
+  
+  .style_image {
+  float: middle;
+	}
+  #cart { width: 300px; float: left; margin-top: 0; }
+  /* style the list to maximize the droppable hitarea */
+  #cart ol { margin: 0; padding: 1em 0 1em 3em;}
+  #effect { float: left; width: 200px; margin-left: ; }
+  </style>
+	<script>
+		
+	$(function() {
+    $( "#catalog" ).accordion();
+    $( "#catalog div" ).draggable({
+      appendTo: "body",
+      helper: "clone",
+     	cursor: "move" 
+    });
+    
+    $( "#cart ol" ).droppable({
+      activeClass: "ui-state-default",
+      hoverClass: "ui-state-hover",
+      accept: ":not(.ui-sortable-helper)",
+      drop: function( event, ui ) {
+        $( this ).find( ".placeholder" ).remove();
+        $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+        $("<li></li>").appendTo(("#effect ol")).text(ui.draggable.text());
+        $("#effect ol").find( ".placeholder" ).remove();
+        
+        $.getJSON("actions/"+ui.draggable.attr('id') +".json", function(data) {
+        	var items = [];
+        	$.each( data.benefits, function( key, val ) {
+			    	items.push( "<li>" + val.content + "</li>" );
+			  	});
+			  	$.each( data.defects, function( key, val ) {
+			    	items.push( "<li>" + val.content + "</li>" );
+			  	});
+					$( "<ul/>", {
+			    "class": "my-new-list",
+			    html: items.join( "" )
+			  }).appendTo( "#effect ol" );		
+       	});   
+      }
+    }).sortable({
+      items: "li:not(.placeholder)",
+      sort: function() {
+        // gets added unintentionally by droppable interacting with sortable
+        // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+        $( this ).removeClass( "ui-state-default" );
+      }
+    });
+  });		
+		
+		
+		
+	</script>
+</head>
+<body data-spy="scroll">
+    <div class="cover">
+      <%= image_tag("high_tatras_min.jpg", :class => "style_image") %>
+    </div>
+    <div class="section section-success">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+          	
+            <ul class="lead nav nav-justified nav-pills">
+              <li class="active">
+                <a>Efekty dzialan<i class="fa fa-star fa-fw"></i></a>
+              </li>
+              <li class="">
+                <a href="/problem">Rozwiazanie problemow</a>
+              </li>
+              <li class="">
+                <a href="#">Messages</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                  	<div id="products">
+										  <h1 class="ui-widget-header">Actions</h1>
+										  <div id="catalog" class: ui-widget-content ui-state-default>
+										 			<%@category.each do |category| %>
+														<h2><%= category.name %></h2>
+														<div>
+											 					<% category.actions.each do |action| %>
+											 					<%= content_tag(:div, action.name , id: action.id) %>
+												  	<% end %>
+										 				</div>
+										 			<% end %>
+										 
+										  </div>
+										</div>
+                  </div>	 
+                  <div class="col-md-4">
+                  	<div id="cart">
+										  <h3 class="ui-widget-header">What you wanna check</h3>
+										  <div class="ui-widget-content">
+										    <ol>
+										      <li class="placeholder">Add your items here</li>
+										    </ol>
+										  </div>
+										</div>
+                  	
+                  </div>
+                  <div class="col-md-4">
+                  	
+                  	<div id ="effect">
+											<h3 class="ui-widget-header">Effects</h3>
+												<div class="ui-widget-content">
+												<ol>
+													<li class="placeholder"> Your effect</li>
+													</li>
+												</ol>
+											</div>
+										</div>
+                  	
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body> 
+</html> 

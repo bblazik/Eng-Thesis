@@ -1,0 +1,13 @@
+<table>
+	  <% @defects.each do |defect| %>
+	    <tr>
+	      <td><%= defect.content %></li> 
+	      <td><%= link_to 'Show', defect_path(defect) %></td>
+     		<td><%= link_to 'Edit', edit_defect_path(defect) %></td>
+     		<td><%= link_to 'Destroy', defect_path(defect),
+              method: :delete %>
+        </td> 
+	    </tr>
+	  <% end %>
+
+</table>

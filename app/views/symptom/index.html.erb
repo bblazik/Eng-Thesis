@@ -1,0 +1,18 @@
+<table>
+	  <% @symptom.each do |s| %>
+	    <tr>
+	      <td><%= s.name %></li>
+	      <td><%= s.avatar_file_name %></li>  
+	      <% s.actions.each do |b| %>
+	      <td><%= b %> </td>
+			<% end %>
+				<td><%= link_to 'Show', symptom_path(s) %></td>
+     		<td><%= link_to 'Edit', edit_symptom_path(s) %></td>
+     		     		<td><%= link_to 'Destroy', symptom_path(s),
+              method: :delete %>
+        </td> 
+	    </tr>
+	  <% end %>
+	</p>
+</table>
+<%= link_to 'Back', root_path %>

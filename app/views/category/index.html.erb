@@ -1,0 +1,15 @@
+
+<h1> It works</h1>
+<table>
+	<p>
+		<h2>Name</h2>
+	<p>
+	  <% @categories.each do |category| %>
+	    <tr>
+	      <td><%= category.name %></li> 
+	      <td><%= link_to 'Show', category_path(category) %></td>
+     		<td><%= link_to 'Edit', edit_category_path(category) %></td> 
+	    </tr>
+	  <% end %>
+	</p>
+</table>

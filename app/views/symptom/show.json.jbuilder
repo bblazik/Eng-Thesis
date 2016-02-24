@@ -1,0 +1,1 @@
+json.actions @symptom.actions, :name

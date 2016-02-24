@@ -1,0 +1,15 @@
+<p>
+  <strong>Title:</strong>
+  <%= @symptom.name %>
+</p>
+
+<p>
+<strong>Solve</strong>
+<% @symptom.actions.each do |s| %>
+<% s %>
+<% end %>
+
+</p>
+<%= link_to 'Edit', edit_symptom_path(@symptom) %>
+ 
+

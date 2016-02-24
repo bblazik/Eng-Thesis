@@ -1,0 +1,59 @@
+<div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="col-md-12">
+              <div class="section">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-4">
+                    	
+                    	<div id="products">
+										  	
+										  	<h3 class="ui-widget-header">Akcje które można sprawdzić</h3>
+											  <div id="catalog" class: ui-widget-content ui-state-default>
+											 			<%@category.each do |category| %>
+															<h2><%= category.name %></h2>
+															<div id = "place">
+												 					<% category.actions.each do |action| %>
+												 					<%= content_tag(:ol, action.name , id: action.id) %>
+													  	<% end %>
+											 				</div>
+											 			<% end %>
+											  </div>
+											</div>
+											
+                    </div>
+                    <div class="col-md-4">
+                    	<div id="cart">
+												  <h3 class="ui-widget-header">Przeciągnij do sprawdzenia</h3>
+												  <div class="ui-widget-content">
+												    <ol>
+												      <li class="placeholder">Przeciągnij tutaj</li>
+												    </ol>
+												  </div>
+										</div>
+                    	
+                    </div>
+                    <div class="col-md-4">
+                    	<div id ="effect">
+											<h3 class="ui-widget-header">Efekty</h3>
+												<div class="ui-widget-content">
+												<ol>
+													<li class="placeholder"> Twóje efekty </li>
+													</li>
+												</ol>
+											</div>
+										</div>
+                    	
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   

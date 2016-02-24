@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<style>   
+		
+  <style>
+  	
+  #gallery { float: left; width: 30%; min-height: 12em; }
+  .gallery.custom-state-active { background: #eee; }
+  .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+  .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+  .gallery li a { float: right; }
+  .gallery li a.ui-icon-zoomin { float: left; }
+  .gallery li img { width: 100%; cursor: move; }
+ 
+  #trash { float: right; width: 65%; min-height: 18em; padding: 1%;margin-top: 1.4em }
+  #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+  #trash h4 .ui-icon { float: left; }
+  #trash .gallery h5 { display: none; }
+  #effect { float: left; width: 200px; margin-left: ; }
+  </style>
+  <script>
+  $(function() {
+    // there's the gallery and the trash
+    var $gallery = $( "#gallery" ),
+      $trash = $( "#trash" );
+ 
+    // let the gallery items be draggable
+    $( "li", $gallery ).draggable({
+      cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+      revert: "invalid", // when not dropped, the item will revert back to its initial position
+      containment: "document",
+      helper: "clone",
+      cursor: "move",
+      zIndex: 100
+    });
+ 
+    // let the trash be droppable, accepting the gallery items
+    $trash.droppable({
+      accept: "#gallery > li",
+      hoverClass : "drop-hover",
+      tolerance : "intersect", 
+      activeClass: "ui-state-highlight",
+      drop: function( event, ui ) {
+        deleteImage( ui.draggable );
+  			  
+      }
+    });
+ 
+    // let the gallery be droppable as well, accepting items from the trash
+    $gallery.droppable({
+      accept: "#trash li",
+      activeClass: "custom-state-active",
+      tolerance : "intersect",
+      drop: function( event, ui ) {
+        recycleImage( ui.draggable );
+      }
+    });
+    
+    function PassingJson (item){
+    	 console.log(item.find("h5").attr('id'));
+        	$.getJSON("/symptom/"+item.find("h5").attr('id') +".json", function(data) {
+        	var items = [];
+        	$.each( data.actions, function( key, val ) {
+			    	items.push( "<li>" + val.name + "</li>" );
+			  	});
+					$( "<ul/>", {
+			    "id": item.find("h5").attr('id'),
+			    html: items.join( "" )
+			  }).appendTo( "#effect ol" );		
+       	}); 
+    }
+    
+    
+ 
+    // image deletion function
+    var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+    function deleteImage( $item ) {
+      $item.fadeOut(function() {
+        var $list = $( "ul", $trash ).length ?
+          $( "ul", $trash ) :
+          $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
+ 
+        $item.find( "a.ui-icon-trash" ).remove();
+        $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+          $item
+            .animate({ width: "48px" })
+            .find( "img" )
+              .animate({ height: "36px" });
+        });
+      });
+			PassingJson($item);  
+    }
+ 
+    // image recycle function
+    var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Renew' class='ui-icon ui-icon-trash'>Delete image</a>";
+    function recycleImage( $item ) {
+      $item.fadeOut(function() {
+        $item
+          .find( "a.ui-icon-refresh" )
+            .remove()
+          .end()
+          .css( "width", "96px")
+          .append( trash_icon )
+          .find( "img" )
+            .css( "height", "72px" )
+          .end()
+          .appendTo( $gallery )
+          .fadeIn();
+      });
+      RemovePassedJson($item);
+    }
+ 
+ 		function RemovePassedJson(item){
+    
+    	var i = item.find("h5").attr("id");
+    	$("#effect ol ul#"+i).remove();
+    }
+ 
+    // resolve the icons behavior with event delegation
+    $( "ul.gallery > li" ).click(function( event ) {
+      var $item = $( this ),
+        $target = $( event.target );
+ 
+      if ( $target.is( "a.ui-icon-trash" ) ) {
+        deleteImage( $item );
+      } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
+        viewLargerImage( $target );
+      } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+        recycleImage( $item );
+      }
+  
+      return false;
+    });
+  });
+  </script>
+</head>
+
+<body data-spy="scroll">
+    <div class="cover">
+      <div class="background-image-fixed cover-image" style="background-image : url('https://unsplash.imgix.net/photo-1418479631014-8cbf89db3431?w=512&amp;q=50&amp;fm=jpg&amp;s=478a9a2196033db7c0bf3c8ba3707f4d')"></div>
+    </div>
+    <div class="section section-success">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="lead nav nav-justified nav-pills">
+              <li class="">
+                <a href ="/">Efekty dzialan</a>
+              </li>
+              <li class="active">
+                <a href="#">Rozwiazanie problemow</a>
+              </li>
+              <li class="">
+                <a href="#">Messages</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                  	<div id="products">
+										  <h1 class="ui-widget-header">Probemy</h1>
+										 			<div class="ui-widget ui-helper-clearfix">
+														<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+															  <% @symptom.each do |s| %>
+															  <li class="ui-widget-content ui-corner-tr">
+																<%= content_tag(:h5, s.name, id: s.id, class: "ui-widget-header") %>
+																<%= image_tag("high_tatras_min.jpg") %>
+																<a href='link/to/trash/script/when/we/have/js/off' title='Renew' class='ui-icon ui-icon-trash'>Delete image</a>
+																<% end %>
+																</li>
+														</ul>
+	
+													</div>
+										</div>
+                  </div>	 
+                  <div class="col-md-4">
+                  	<div id="trash" class="ui-widget-content ui-state-default">
+										  <h4 class="ui-widget-header"><span class="ui-icon-arrowthickstop-1-s"></span> przenies tutaj</h4>
+										</div>
+									</div>
+                  
+                  <div class="col-md-4">
+                  	<div id ="effect">
+											<h3 class="ui-widget-header">Sugerowane ackje</h3>
+												<div class="ui-widget-content">
+												<ol>
+
+												</ol>
+											</div>
+										</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body> 
+</html>

@@ -1,0 +1,20 @@
+<h1>Editing benefit</h1>
+ 
+<%= form_for :benefit, url: benefit_path(@benefit), method: :patch do |f| %>
+ 
+
+ 
+  <p>
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </p>
+ 
+
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', benefits_path %>
